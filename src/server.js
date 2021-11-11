@@ -157,13 +157,22 @@ const setupServer = () => {
    *             sentAt:
    *               type: date
    *               example: 2021-11-11T07:04:21.813Z
+   *       400:
+   *         description: 必須項目がnullの場合のレスポンス
+   *         schema:
+   *           type: text
+   *           example: Not null key's value is null.
    */
   app.post("/api/v2/comics", (req, res) => {
     // TODO: notnull項目がなくて更新できなかったときも200で返ってしまう。
-    models.comics
+    if(req.body.title && req.body.author && req.body.pages){
+      models.comics
       .create(req.body)
       .then(comic => res.json(comic))
       .catch((err) => res.status(400).send(err.message));
+    } else {
+      res.status(400).send("Not null key's value is null.");
+    }
   });
 
   /**

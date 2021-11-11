@@ -154,7 +154,7 @@ describe("comics", () => {
       });
     });
 
-    xdescribe("POST /api/v2/comics", () => {
+    describe("POST /api/v2/comics", () => {
       it("should insert comic", async () => {
         // Setup
         const expected = {
@@ -174,10 +174,28 @@ describe("comics", () => {
         res.should.be.json;
         expect(JSON.parse(res.text)).to.include(expected);
       });
+
+      it("should not insert comic(key's value is null)", async () => {
+        // Setup
+        const expected = {
+          //title: "すばらしい本",
+          volume: 3,
+          //author: "青木言太",
+          publisher: "きのこ出版",
+          description: "大人気ベストセラー",
+          //pages: 100,
+        };
+
+        // Exercise
+        const res = await request.post("/api/v2/comics").send(expected);
+  
+        // Assert
+        res.should.have.status(400);
+      });
     });
 
     describe("PATCH /api/v2/comics/:id", () => {
-      it("should change No.31 comic", async () => {
+      it("should change No.24 comic", async () => {
         // Setup
         const expected = {
           title: "更新された本",
@@ -189,8 +207,8 @@ describe("comics", () => {
         };
 
         // Exercise
-        const res = await request.patch("/api/v2/comics/31").send(expected);
-        const res2 = await request.get("/api/v2/comics/31");
+        const res = await request.patch("/api/v2/comics/24").send(expected);
+        const res2 = await request.get("/api/v2/comics/24");
   
         // Assert
         res.should.have.status(204);
