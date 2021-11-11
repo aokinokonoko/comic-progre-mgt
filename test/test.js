@@ -85,7 +85,7 @@ describe("comics", () => {
     );
   });
 
-  describe("#update", () => {
+  xdescribe("#update", () => {
     const expected = {
       id: 23,
       title: "test999",
@@ -103,6 +103,22 @@ describe("comics", () => {
         .then((data) => {
           expect(data).to.include(expected);
           //console.log(data);
+        });
+    });
+  });
+
+  describe("#delete", () => {
+    const expected = {
+      id: 29
+    };
+
+    it("delete a No.21 record", () =>{
+      models.comics.deleteById(expected);
+      const id = 29;
+      models.comics
+        .getById({ id })
+        .then((data) => {
+          expect(data).to.be.null;
         });
     });
   });

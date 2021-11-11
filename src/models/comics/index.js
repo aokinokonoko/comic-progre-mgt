@@ -53,7 +53,7 @@ const createComics = (knex) => {
           err.message.match("duplicate key value") ||
           err.message.match("UNIQUE constraint failed")
         )
-          return Promise.reject(new Error("That username already exists"));
+        // return Promise.reject(new Error("That title already exists"));
 
         // throw unknown errors
         return Promise.reject(err);
@@ -106,8 +106,24 @@ const updateComicsById = (knex) => {
           err.message.match("duplicate key value") ||
           err.message.match("UNIQUE constraint failed")
         )
-          return Promise.reject(new Error("That username already exists"));
+        // return Promise.reject(new Error("That title already exists"));
 
+        // throw unknown errors
+        return Promise.reject(err);
+      });
+  };
+};
+
+const deleteComicsById = (knex) => {
+  return (params) => {
+    const { id } = params;
+
+    // TODO: 必須項目のバリデーションを入れる.
+
+    return knex("comics")
+      .where({id: id})
+      .del()
+      .catch((err) => {
         // throw unknown errors
         return Promise.reject(err);
       });
@@ -119,5 +135,6 @@ module.exports = (knex) => {
     create: createComics(knex),
     getById: getComicsById(knex),
     updateById: updateComicsById(knex),
+    deleteById: deleteComicsById(knex),
   };
 };
