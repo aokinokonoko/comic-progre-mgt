@@ -25,7 +25,9 @@
     "express": "^4.17.1",
     "knex": "^0.95.14",
     "moment": "^2.29.1",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "chai": "^4.3.4",

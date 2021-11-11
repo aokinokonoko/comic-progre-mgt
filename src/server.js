@@ -6,6 +6,26 @@ const config = require("../src/config");
 const knex = require("knex")(config.db);
 const models = require("./models")(knex);
 
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express')
+
+const swaggerSpec = swaggerJSDoc({
+  swaggerDefinition: {
+      swagger: "2.0",
+      info: {
+          title: "漫画読書記録API",
+          version: "1.0.0",
+          description: "漫画の読書記録をするAPI（の予定。現時点はまだ漫画の情報の格納のみ.）",
+      },
+      basePath: "/api",
+      consumes: ["application/json"],
+      produces: ["application/json", "text/plain"],
+  },
+  apis: ["./api/users.js", "./api/books.js"],
+});
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 const testdata = {
   name: "hello world!",
   num: 12345,
