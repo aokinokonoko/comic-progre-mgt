@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
+    "makeMigrate": "knex migrate:make --knexfile src/models/knexfile.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,7 +21,8 @@
   "homepage": "https://github.com/aokinokonoko/comic-progre-mgt#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "knex": "^0.95.14"
+    "knex": "^0.95.14",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "chai": "^4.3.4",

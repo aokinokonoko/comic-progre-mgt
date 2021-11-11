@@ -7,6 +7,8 @@ const testdata = {
 }
 
 const setupServer = () => {
+  app.use(express.json());
+
   app.get("/api/comics", (req, res) => {
     res.send(testdata);
   });
