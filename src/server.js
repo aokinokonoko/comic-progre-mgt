@@ -25,14 +25,15 @@ const setupServer = () => {
       .then(comic => res.json(comic))
       .catch((err) => {
         if (err.message.match("Error finding comics")){
-          res.status(200).json({});
+          return res.status(200).json({});
         };
         // throw unknown errors
-        res.status(400).send(err.message)
+        return res.status(400).send(err.message)
       });
   });
 
   app.post("/api/v2/comics", (req, res) => {
+    // TODO: notnull項目がなくて更新できなかったときも200で返ってしまう。
     models.comics
       .create(req.body)
       .then(comic => res.json(comic))
