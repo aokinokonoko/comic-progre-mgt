@@ -16,15 +16,10 @@ const swaggerSpec = swaggerJSDoc({
           title: "漫画読書記録API",
           version: "1.0.0",
           description: "漫画の読書記録をするAPI（の予定。現時点はまだ漫画の情報の格納のみ.）",
-      },
-      basePath: "/api",
-      consumes: ["application/json"],
-      produces: ["application/json", "text/plain"],
+      }
   },
-  apis: ["./api/users.js", "./api/books.js"],
+  apis: ["./src/server.js"],
 });
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const testdata = {
   name: "hello world!",
@@ -34,10 +29,54 @@ const testdata = {
 const setupServer = () => {
   app.use(express.json());
 
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
   app.get("/api/v1/comics", (req, res) => {
     res.send(testdata);
   });
 
+  /**
+   * @swagger
+   * /api/v2/comics/{id}:
+   *   get:
+   *     description: 指定したidの漫画の情報を取得する.
+   *     parameters:
+   *       - name: id
+   *         description: 取得したい漫画のID
+   *         in: path
+   *         required: true
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: 成功時のレスポンス
+   *         schema:
+   *           type: object
+   *           properties:
+   *             id:
+   *               type: integer
+   *               example: 1
+   *             title:
+   *               type: string
+   *               example: 五等分の花嫁
+   *             volume:
+   *               type: integer
+   *               example: 1
+   *             author: 
+   *               type: string
+   *               example: 春場ねぎ
+   *             publisher:
+   *               type: string
+   *               example: 講談社
+   *             pages:
+   *               type: integer
+   *               example: 196
+   *             descripton:
+   *               type: string
+   *               example: なんか適当なコメント
+   *             sentAt:
+   *               type: date
+   *               example: 2021-11-11T07:04:21.813Z
+   */
   app.get("/api/v2/comics/:id", (req, res) => {
     const { id } = req.params;
     models.comics
