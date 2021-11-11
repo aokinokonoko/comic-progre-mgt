@@ -45,7 +45,7 @@ const setupServer = () => {
    *         description: 取得したい漫画のID
    *         in: path
    *         required: true
-   *         type: string
+   *         type: integer
    *     responses:
    *       200:
    *         description: 成功時のレスポンス
@@ -91,7 +91,7 @@ const setupServer = () => {
       });
   });
 
-    /**
+  /**
    * @swagger
    * /api/v2/comics:
    *   post:
@@ -104,21 +104,27 @@ const setupServer = () => {
    *           type: object
    *           properties:
    *             title:
+   *               required: true
    *               type: string
    *               example: テスト用book
    *             volume:
+   *               required: false
    *               type: integer
    *               example: 12
    *             author:
+   *               required: true
    *               type: string
    *               example: 名無し太郎
    *             publisher:
+   *               required: false
    *               type: string
    *               example: 名無し出版
    *             pages:
+   *               required: true
    *               type: integer
    *               example: 120
    *             description:
+   *               required: false
    *               type: string
    *               example: なんかのコメント
    *     responses:
@@ -160,6 +166,51 @@ const setupServer = () => {
       .catch((err) => res.status(400).send(err.message));
   });
 
+  /**
+   * @swagger
+   * /api/v2/comics/{id}:
+   *   patch:
+   *     description: 登録された漫画の情報を更新する.
+   *     parameters:
+   *       - name: id
+   *         description: 更新したい漫画のID
+   *         in: path
+   *         required: true
+   *         type: integer
+   *       - name: body
+   *         in: body
+   *         required: true
+   *         schema:
+   *           type: object
+   *           properties:
+   *             title:
+   *               required: false
+   *               type: string
+   *               example: 更新テスト用book
+   *             volume:
+   *               required: false
+   *               type: integer
+   *               example: 120
+   *             author:
+   *               required: false
+   *               type: string
+   *               example: 更新名無し太郎
+   *             publisher:
+   *               required: false
+   *               type: string
+   *               example: 更新名無し出版
+   *             pages:
+   *               required: false
+   *               type: integer
+   *               example: 120
+   *             description:
+   *               required: false
+   *               type: string
+   *               example: 更新：なんかのコメント
+   *     responses:
+   *       204:
+   *         description: 成功時のレスポンス
+   */
   app.patch("/api/v2/comics/:id", (req, res) => {
     const { id } = req.params;
     models.comics
@@ -168,6 +219,21 @@ const setupServer = () => {
       .catch((err) => res.status(400).send(err.message));
   });
 
+  /**
+   * @swagger
+   * /api/v2/comics/{id}:
+   *   delete:
+   *     description: 登録された漫画の情報を削除する.
+   *     parameters:
+   *       - name: id
+   *         description: 更新したい漫画のID
+   *         in: path
+   *         required: true
+   *         type: integer
+   *     responses:
+   *       204:
+   *         description: 成功時のレスポンス
+   */
   app.delete("/api/v2/comics/:id", (req, res) => {
     const { id } = req.params;
     models.comics
