@@ -29,5 +29,5 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   // undo this migration by destroying the 'comics' table
-  return knex.schema.dropTable("user_messages");
+  return knex.schema.dropTable("comics");
 };
