@@ -23,7 +23,13 @@ const setupServer = () => {
     models.comics
       .getById({ id })
       .then(comic => res.json(comic))
-      .catch((err) => res.status(400).send(err.message));
+      .catch((err) => {
+        if (err.message.match("Error finding comics")){
+          res.status(200).json({});
+        };
+        // throw unknown errors
+        res.status(400).send(err.message)
+      });
   });
 
   app.post("/api/v2/comics", (req, res) => {
@@ -33,9 +39,18 @@ const setupServer = () => {
       .catch((err) => res.status(400).send(err.message));
   });
 
-  app.patch("/api/v2/comics", (req, res) => {
+  app.patch("/api/v2/comics/:id", (req, res) => {
+    const { id } = req.params;
     models.comics
-      .create(req.body)
+      .updateById(Object.assign(req.body, {id: id}))
+      .then(comic => res.status(204).json(comic))
+      .catch((err) => res.status(400).send(err.message));
+  });
+
+  app.delete("/api/v2/comics/:id", (req, res) => {
+    const { id } = req.params;
+    models.comics
+      .deleteById({ id })
       .then(comic => res.status(204).json(comic))
       .catch((err) => res.status(400).send(err.message));
   });

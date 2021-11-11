@@ -177,7 +177,7 @@ describe("comics", () => {
     });
 
     describe("PATCH /api/v2/comics/:id", () => {
-      it("should change No.50 comic", async () => {
+      it("should change No.31 comic", async () => {
         // Setup
         const expected = {
           title: "更新された本",
@@ -189,14 +189,28 @@ describe("comics", () => {
         };
 
         // Exercise
-        const res = await request.patch("/api/v2/comics").send(expected);
-        const res2 = await request.get("/api/v2/comics/50").send(expected);
+        const res = await request.patch("/api/v2/comics/31").send(expected);
+        const res2 = await request.get("/api/v2/comics/31");
   
         // Assert
         res.should.have.status(204);
         res2.should.have.status(200);
         res2.should.be.json;
         expect(JSON.parse(res2.text)).to.include(expected);
+      });
+    });
+
+    describe("DELETE /api/v2/comics/:id", () => {
+      it("should change No.40 comic", async () => {
+        // Exercise
+        const res = await request.delete("/api/v2/comics/40");
+        const res2 = await request.get("/api/v2/comics/40");
+  
+        // Assert
+        res.should.have.status(204);
+        res2.should.have.status(200);
+        res2.should.be.json;
+        expect(JSON.parse(res2.text)).to.be.deep.equal({});
       });
     });
   });
