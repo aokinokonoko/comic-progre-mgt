@@ -164,7 +164,6 @@ const setupServer = () => {
    *           example: Not null key's value is null.
    */
   app.post("/api/v2/comics", (req, res) => {
-    // TODO: notnull項目がなくて更新できなかったときも200で返ってしまう。
     if(req.body.title && req.body.author && req.body.pages){
       models.comics
       .create(req.body)

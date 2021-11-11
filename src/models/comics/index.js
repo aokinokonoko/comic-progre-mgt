@@ -28,9 +28,6 @@ Comics.prototype.serialize = function() {
 const createComics = (knex) => {
   return (params) => {
     const { title, volume, author, publisher, pages, description} = params;
-
-    // TODO: 必須項目のバリデーションを入れる.
-
     return knex("comics")
       .insert({
         title: title,
@@ -64,9 +61,6 @@ const createComics = (knex) => {
 const getComicsById = (knex) => {
   return (params) => {
     const { id } = params;
-
-    // TODO: 必須項目のバリデーションを入れる.
-
     return knex("comics")
       .where({id: id})
       .select()
@@ -81,9 +75,6 @@ const getComicsById = (knex) => {
 const updateComicsById = (knex) => {
   return (params) => {
     const { id, title, volume, author, publisher, pages, description } = params;
-
-    // TODO: 必須項目のバリデーションを入れる.
-
     return knex("comics")
       .where({id: id})
       .update({
@@ -117,9 +108,6 @@ const updateComicsById = (knex) => {
 const deleteComicsById = (knex) => {
   return (params) => {
     const { id } = params;
-
-    // TODO: 必須項目のバリデーションを入れる.
-
     return knex("comics")
       .where({id: id})
       .del()
