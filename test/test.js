@@ -180,7 +180,7 @@ describe("comics", () => {
         // Assert
         res.should.have.status(200);
         res.should.be.json;
-        console.log(res.body);
+        // console.log(res.body);
         // TODO: listのテストを書く.
       });
     });
