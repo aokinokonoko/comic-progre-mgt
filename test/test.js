@@ -3,8 +3,14 @@ const config = require("../src/config");
 const knex = require("knex")(config.db);
 const models = require("../src/models")(knex);
 
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+chai.use(chaiHttp);
+chai.should();
+const { setupServer } = require("../src/server");
+
 describe("comics", () => {
-  describe("setup", () => {
+  xdescribe("setup", () => {
     it("able to connect to database", () =>
       knex
         .raw("select 1+1 as result")
@@ -16,7 +22,7 @@ describe("comics", () => {
         .catch(() => assert.fail("users table is not found.")));
   });
 
-  describe("#create", () => {
+  xdescribe("#create", () => {
     const title = "test1";
     const author = "ABC";
     const pages = 100;
@@ -43,7 +49,7 @@ describe("comics", () => {
       );
   });
 
-  describe("#get", () => {
+  xdescribe("#get", () => {
     beforeEach(() =>
     models.comics
       .create({ title: "test1", author: "ABC", pages: 100 })
@@ -79,4 +85,32 @@ describe("comics", () => {
       );
   });
 
+  const server = setupServer();
+  describe("comics API Server", () => {
+    let request;
+    let request2;
+    // TODO: keepopenにする！
+    beforeEach(() => {
+      request = chai.request(server);
+      request2 = chai.request(server);
+    });
+  
+    describe("GET /api/v2/comics/:id", () => {
+      it("should return No.21 comic", async () => {
+        // Exercise
+        const res = await request.get("/api/v2/comics/23");
+        const expected = {
+          id: 23,
+          title: "test3",
+          author: "GHI",
+          pages: 900,
+        };
+  
+        // Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        expect(JSON.parse(res.text)).to.include(expected);
+      });
+    });
+  });
 });

@@ -1,3 +1,6 @@
+require("dotenv").config();
+
+// TODO: envファイルからの読み込みをするようにする.
 module.exports = {
   db: {
     client: "pg",
