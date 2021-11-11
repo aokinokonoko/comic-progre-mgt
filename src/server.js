@@ -91,6 +91,67 @@ const setupServer = () => {
       });
   });
 
+    /**
+   * @swagger
+   * /api/v2/comics:
+   *   post:
+   *     description: 漫画の情報を登録する.
+   *     parameters:
+   *       - name: body
+   *         in: body
+   *         required: true
+   *         schema:
+   *           type: object
+   *           properties:
+   *             title:
+   *               type: string
+   *               example: テスト用book
+   *             volume:
+   *               type: integer
+   *               example: 12
+   *             author:
+   *               type: string
+   *               example: 名無し太郎
+   *             publisher:
+   *               type: string
+   *               example: 名無し出版
+   *             pages:
+   *               type: integer
+   *               example: 120
+   *             description:
+   *               type: string
+   *               example: なんかのコメント
+   *     responses:
+   *       200:
+   *         description: 成功時のレスポンス
+   *         schema:
+   *           type: object
+   *           properties:
+   *             id:
+   *               type: integer
+   *               example: 1
+   *             title:
+   *               type: string
+   *               example: 五等分の花嫁
+   *             volume:
+   *               type: integer
+   *               example: 1
+   *             author: 
+   *               type: string
+   *               example: 春場ねぎ
+   *             publisher:
+   *               type: string
+   *               example: 講談社
+   *             pages:
+   *               type: integer
+   *               example: 196
+   *             descripton:
+   *               type: string
+   *               example: なんか適当なコメント
+   *             sentAt:
+   *               type: date
+   *               example: 2021-11-11T07:04:21.813Z
+   */
   app.post("/api/v2/comics", (req, res) => {
     // TODO: notnull項目がなくて更新できなかったときも200で返ってしまう。
     models.comics
