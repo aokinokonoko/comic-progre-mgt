@@ -10,8 +10,8 @@ chai.should();
 const { setupServer } = require("../src/server");
 
 describe("comics", () => {
-  xdescribe("about knex", () => {
-    xdescribe("setup", () => {
+  describe("about knex", () => {
+    describe("setup", () => {
       it("able to connect to database", () =>
         knex
           .raw("select 1+1 as result")
@@ -82,6 +82,24 @@ describe("comics", () => {
             });
             expect(messages.id).to.be.a("number");
             expect(messages.sentAt).to.be.a("Date");
+          })
+      );
+    });
+
+    describe("#list", () => {
+      const expected = { title: "list-test1", author: "AAAAA", pages: 100 };
+      beforeEach(() =>
+      models.comics
+        .create(expected)
+      );
+
+      it("get comics list", () =>
+        models
+          .comics
+          .get()
+          .then((data) => {
+            // console.log(data);
+            // TODO: listのテストを実装する.
           })
       );
     });

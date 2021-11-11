@@ -72,6 +72,24 @@ const getComicsById = (knex) => {
   };
 };
 
+const getComics = (knex) => {
+  return (params) => {
+    return knex("comics")
+      .select()
+      .then((comics) => {
+        if (comics.length) {
+          // const array = [];
+          // for (comic of comics){
+          //   array.push(new Comics(comic));
+          // }
+          // return array;
+          return comics;
+        }
+        throw new Error(`Error finding comics}`);
+      });
+  };
+};
+
 const updateComicsById = (knex) => {
   return (params) => {
     const { id, title, volume, author, publisher, pages, description } = params;
@@ -122,6 +140,7 @@ module.exports = (knex) => {
   return {
     create: createComics(knex),
     getById: getComicsById(knex),
+    get: getComics(knex),
     updateById: updateComicsById(knex),
     deleteById: deleteComicsById(knex),
   };
