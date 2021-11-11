@@ -23,7 +23,8 @@ describe("comics", () => {
 
     it("creates a comic record", () =>
       models
-        .comics({ title, author, pages })
+        .comics
+        .create({ title, author, pages })
         .then((messages) => {
           //console.log(messages);
           expect(messages).to.include({

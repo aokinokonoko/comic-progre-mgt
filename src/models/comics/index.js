@@ -25,7 +25,7 @@ Comics.prototype.serialize = function() {
   };
 };
 
-module.exports = (knex) => {
+const createComics = (knex) => {
   return (params) => {
     const { title, volume, author, publisher, pages, description} = params;
 
@@ -58,5 +58,11 @@ module.exports = (knex) => {
         // throw unknown errors
         return Promise.reject(err);
       });
+  };
+};
+
+module.exports = (knex) => {
+  return {
+    create: createComics(knex),
   };
 };
