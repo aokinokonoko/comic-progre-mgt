@@ -24,6 +24,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "knex": "^0.95.14",
+    "moment": "^2.29.1",
     "pg": "^8.7.1"
   },
   "devDependencies": {

@@ -15,4 +15,24 @@ describe("comics", () => {
         .select()
         .catch(() => assert.fail("users table is not found.")));
   });
+
+  describe("#create", () => {
+    const title = "test1";
+    const author = "ABC";
+    const pages = 100;
+
+    it("creates a comic record", () =>
+      models
+        .comics({ title, author, pages })
+        .then((messages) => {
+          //console.log(messages);
+          expect(messages).to.include({
+            title: title,
+            author: author,
+            pages: pages,
+          });
+          expect(messages.id).to.be.a("number");
+          expect(messages.sentAt).to.be.a("Date");
+        }));
+  });
 });
