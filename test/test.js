@@ -59,7 +59,7 @@ describe("comics", () => {
       .then(() => {
         return models.comics.create({ title: "test3", author: "GHI", pages: 900 });
       })
-  );
+    );
 
     // afterEach(() =>
     // knex("comics")
@@ -82,7 +82,29 @@ describe("comics", () => {
           expect(messages.id).to.be.a("number");
           expect(messages.sentAt).to.be.a("Date");
         })
-      );
+    );
+  });
+
+  describe("#update", () => {
+    const expected = {
+      id: 23,
+      title: "test999",
+      volume: 1234,
+      author: "XYZ",
+      publisher: "aaa",
+      pages: 10000,
+    };
+
+    it("update a No.23 record", () =>{
+      models.comics.updateById(expected);
+      const id = 23;
+      models.comics
+        .getById({ id })
+        .then((data) => {
+          expect(data).to.include(expected);
+          //console.log(data);
+        });
+    });
   });
 
   const server = setupServer();
@@ -98,9 +120,9 @@ describe("comics", () => {
     describe("GET /api/v2/comics/:id", () => {
       it("should return No.21 comic", async () => {
         // Exercise
-        const res = await request.get("/api/v2/comics/23");
+        const res = await request.get("/api/v2/comics/27");
         const expected = {
-          id: 23,
+          id: 27,
           title: "test3",
           author: "GHI",
           pages: 900,
@@ -113,7 +135,7 @@ describe("comics", () => {
       });
     });
 
-    describe("POST /api/v2/comics", () => {
+    xdescribe("POST /api/v2/comics", () => {
       it("should insert comic", async () => {
         // Setup
         const expected = {

@@ -78,9 +78,46 @@ const getComicsById = (knex) => {
   };
 };
 
+const updateComicsById = (knex) => {
+  return (params) => {
+    const { id, title, volume, author, publisher, pages, description } = params;
+
+    // TODO: 必須項目のバリデーションを入れる.
+
+    return knex("comics")
+      .where({id: id})
+      .update({
+        title: title,
+        volume: volume,
+        author: author,
+        publisher: publisher,
+        pages: pages,
+        description: description
+      })
+      .then(() => {
+        return knex("comics")
+          .where({id: id})
+          .select();
+      })
+      .then((comics) => new Comics(comics.pop()))
+      .catch((err) => {
+        // sanitize known errors
+        if (
+          err.message.match("duplicate key value") ||
+          err.message.match("UNIQUE constraint failed")
+        )
+          return Promise.reject(new Error("That username already exists"));
+
+        // throw unknown errors
+        return Promise.reject(err);
+      });
+  };
+};
+
 module.exports = (knex) => {
   return {
     create: createComics(knex),
     getById: getComicsById(knex),
+    updateById: updateComicsById(knex),
   };
 };
