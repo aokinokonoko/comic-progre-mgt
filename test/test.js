@@ -21,6 +21,11 @@ describe("comics", () => {
     const author = "ABC";
     const pages = 100;
 
+    afterEach(() =>
+    knex("comics")
+      .del()
+    );
+
     it("creates a comic record", () =>
       models
         .comics
