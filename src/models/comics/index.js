@@ -61,8 +61,26 @@ const createComics = (knex) => {
   };
 };
 
+const getComicsById = (knex) => {
+  return (params) => {
+    const { id } = params;
+
+    // TODO: 必須項目のバリデーションを入れる.
+
+    return knex("comics")
+      .where({id: id})
+      .select()
+      .then((comics) => {
+        if (comics.length) return new Comics(comics.pop());
+
+        throw new Error(`Error finding comics No.${id}`);
+      });
+  };
+};
+
 module.exports = (knex) => {
   return {
     create: createComics(knex),
+    getById: getComicsById(knex),
   };
 };
