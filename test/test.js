@@ -112,5 +112,27 @@ describe("comics", () => {
         expect(JSON.parse(res.text)).to.include(expected);
       });
     });
+
+    describe("POST /api/v2/comics", () => {
+      it("should insert comic", async () => {
+        // Setup
+        const expected = {
+          title: "すばらしい本",
+          volume: 3,
+          author: "青木言太",
+          publisher: "きのこ出版",
+          description: "大人気ベストセラー",
+          pages: 100,
+        };
+
+        // Exercise
+        const res = await request.post("/api/v2/comics").send(expected);
+  
+        // Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        expect(JSON.parse(res.text)).to.include(expected);
+      });
+    });
   });
 });

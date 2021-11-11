@@ -26,6 +26,13 @@ const setupServer = () => {
       .catch((err) => res.status(400).send(err.message));
   });
 
+  app.post("/api/v2/comics", (req, res) => {
+    models.comics
+      .create(req.body)
+      .then(comic => res.json(comic))
+      .catch((err) => res.status(400).send(err.message));
+  });
+
   return app;
 };
 
