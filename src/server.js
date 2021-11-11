@@ -90,6 +90,54 @@ const setupServer = () => {
         return res.status(400).send(err.message)
       });
   });
+  
+    /**
+   * @swagger
+   * /api/v2/comics:
+   *   get:
+   *     description: 登録された漫画の一覧情報を取得する.
+   *     responses:
+   *       200:
+   *         description: 成功時のレスポンス
+   *         schema:
+   *           type: array
+   *           items:
+   *             type: object
+   *             properties:
+   *               id:
+   *                 type: integer
+   *                 example: 1
+   *               title:
+   *                 type: string
+   *                 example: 五等分の花嫁
+   *               volume:
+   *                 type: integer
+   *                 example: 1
+   *               author: 
+   *                 type: string
+   *                 example: 春場ねぎ
+   *               publisher:
+   *                 type: string
+   *                 example: 講談社
+   *               pages:
+   *                 type: integer
+   *                 example: 196
+   *               descripton:
+   *                 type: string
+   *                 example: なんか適当なコメント
+   *               sentAt:
+   *                 type: date
+   *                 example: 2021-11-11T07:04:21.813Z
+   */
+  app.get("/api/v2/comics", (req, res) => {
+    models.comics
+      .get()
+      .then(comic => res.json(comic))
+      .catch((err) => {
+        // throw unknown errors
+        return res.status(400).send(err.message)
+      });
+  });
 
   /**
    * @swagger

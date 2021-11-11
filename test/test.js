@@ -172,6 +172,19 @@ describe("comics", () => {
       });
     });
 
+    describe("GET /api/v2/comics", () => {
+      it("should return comics list", async () => {
+        // Exercise
+        const res = await request.get("/api/v2/comics");
+  
+        // Assert
+        res.should.have.status(200);
+        res.should.be.json;
+        console.log(res.body);
+        // TODO: listのテストを書く.
+      });
+    });
+
     describe("POST /api/v2/comics", () => {
       it("should insert comic", async () => {
         // Setup
