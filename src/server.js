@@ -33,6 +33,13 @@ const setupServer = () => {
       .catch((err) => res.status(400).send(err.message));
   });
 
+  app.patch("/api/v2/comics", (req, res) => {
+    models.comics
+      .create(req.body)
+      .then(comic => res.status(204).json(comic))
+      .catch((err) => res.status(400).send(err.message));
+  });
+
   return app;
 };
 
